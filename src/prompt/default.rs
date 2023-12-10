@@ -95,7 +95,7 @@ impl Default for DefaultPrompt {
     fn default() -> Self {
         DefaultPrompt {
             left_prompt: DefaultPromptSegment::WorkingDirectory,
-            right_prompt: DefaultPromptSegment::CurrentDateTime,
+            right_prompt: DefaultPromptSegment::Empty,
         }
     }
 }
