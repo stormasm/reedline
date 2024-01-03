@@ -14,6 +14,10 @@ use {
     crossbeam::channel::TryRecvError,
     std::io::{Error, ErrorKind},
 };
+
+use log::info;
+use simplelog::{Config, LevelFilter, WriteLogger};
+
 use {
     crate::{
         completion::{Completer, DefaultCompleter},
@@ -180,6 +184,7 @@ impl Reedline {
     /// Create a new [`Reedline`] engine with a local [`History`] that is not synchronized to a file.
     #[must_use]
     pub fn create() -> Self {
+        init_logger();
         let history = Box::<FileBackedHistory>::default();
         let painter = Painter::new(std::io::BufWriter::new(std::io::stderr()));
         let buffer_highlighter = Box::<ExampleHighlighter>::default();
@@ -609,6 +614,7 @@ impl Reedline {
     /// Returns a [`std::io::Result`] in which the `Err` type is [`std::io::Result`]
     /// and the `Ok` variant wraps a [`Signal`] which handles user inputs.
     pub fn read_line(&mut self, prompt: &dyn Prompt) -> Result<Signal> {
+        info!("hola");
         terminal::enable_raw_mode()?;
         self.bracketed_paste.enter();
         self.kitty_protocol.enter();
@@ -1764,6 +1770,14 @@ impl Reedline {
 
         Ok(EventStatus::Exits(Signal::Success(buffer)))
     }
+}
+
+fn init_logger() {
+    let _ = WriteLogger::init(
+        LevelFilter::Info,
+        Config::default(),
+        File::create("simplelog01.log").expect("Failed to start simplelog"),
+    );
 }
 
 #[test]
