@@ -614,7 +614,7 @@ impl Reedline {
     /// Returns a [`std::io::Result`] in which the `Err` type is [`std::io::Result`]
     /// and the `Ok` variant wraps a [`Signal`] which handles user inputs.
     pub fn read_line(&mut self, prompt: &dyn Prompt) -> Result<Signal> {
-        info!("hola");
+        info!("read_line: hola");
         terminal::enable_raw_mode()?;
         self.bracketed_paste.enter();
         self.kitty_protocol.enter();

@@ -1,5 +1,5 @@
 use crate::{CursorConfig, PromptEditMode, PromptViMode};
-
+use log::info;
 use {
     super::utils::{coerce_crlf, line_width},
     crate::{
@@ -139,6 +139,7 @@ impl Painter {
         use_ansi_coloring: bool,
         cursor_config: &Option<CursorConfig>,
     ) -> Result<()> {
+        info!("repaint_buffer");
         self.stdout.queue(cursor::Hide)?;
 
         let screen_width = self.screen_width();

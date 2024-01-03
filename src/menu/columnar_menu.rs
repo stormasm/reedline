@@ -3,6 +3,7 @@ use crate::{
     core_editor::Editor, menu_functions::string_difference, painting::Painter, Completer,
     Suggestion, UndoBehavior,
 };
+use log::info;
 use nu_ansi_term::{ansi::RESET, Style};
 
 /// Default values used as reference for the menu. These values are set during
@@ -243,6 +244,7 @@ impl ColumnarMenu {
 
     /// Move menu cursor left
     fn move_left(&mut self) {
+        info!("columnar_menu: move_left");
         self.col_pos = if let Some(row) = self.col_pos.checked_sub(1) {
             row
         } else if self.index() + 1 == self.values.len() {
