@@ -1,4 +1,5 @@
 use crate::{Completer, Span, Suggestion};
+use log::info;
 use std::{
     collections::{BTreeMap, BTreeSet},
     str::Chars,
@@ -30,6 +31,7 @@ pub struct DefaultCompleter {
 
 impl Default for DefaultCompleter {
     fn default() -> Self {
+        info!("default() was called for DefaultCompleter");
         let inclusions = Arc::new(BTreeSet::new());
         Self {
             root: CompletionNode::new(inclusions),
@@ -69,6 +71,7 @@ impl Completer for DefaultCompleter {
     ///     ]);
     /// ```
     fn complete(&mut self, line: &str, pos: usize) -> Vec<Suggestion> {
+        info!("-------------------------------> complete: {:?}", line);
         let mut span_line_whitespaces = 0;
         let mut completions = vec![];
         // Trimming in case someone passes in text containing stuff after the cursor, if
@@ -134,6 +137,7 @@ impl DefaultCompleter {
 
     /// Construct the default completer with a list of commands/keywords to highlight, given a minimum word length
     pub fn new_with_wordlen(external_commands: Vec<String>, min_word_len: usize) -> Self {
+        info!("new_with_wordlen: {:?}", external_commands);
         let mut dc = DefaultCompleter::default().set_min_word_len(min_word_len);
         dc.insert(external_commands);
         dc
@@ -287,6 +291,7 @@ struct CompletionNode {
 
 impl CompletionNode {
     fn new(incl: Arc<BTreeSet<char>>) -> Self {
+        info!("CompletionNode new was called");
         Self {
             subnodes: BTreeMap::new(),
             leaf: false,
@@ -344,6 +349,7 @@ impl CompletionNode {
     }
 
     fn collect(&self, partial: &str) -> Vec<String> {
+        info!("{:?}", partial);
         let mut completions = vec![];
         if self.leaf {
             completions.push(partial.to_string());
@@ -356,6 +362,7 @@ impl CompletionNode {
                 completions.append(&mut node.collect(&partial));
             }
         }
+        info!("return = {:?}", completions);
         completions
     }
 }
