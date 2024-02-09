@@ -1,7 +1,7 @@
-use std::path::PathBuf;
-
 use itertools::Itertools;
 use nu_ansi_term::{Color, Style};
+use simplelog::{Config, LevelFilter, WriteLogger};
+use std::path::PathBuf;
 
 use crate::{enums::ReedlineRawEvent, CursorConfig};
 #[cfg(feature = "bashisms")]
@@ -184,6 +184,7 @@ impl Reedline {
     /// Create a new [`Reedline`] engine with a local [`History`] that is not synchronized to a file.
     #[must_use]
     pub fn create() -> Self {
+        init_logger();
         let history = Box::<FileBackedHistory>::default();
         let painter = Painter::new(std::io::BufWriter::new(std::io::stderr()));
         let buffer_highlighter = Box::<ExampleHighlighter>::default();
@@ -1798,6 +1799,14 @@ impl Reedline {
 
         Ok(EventStatus::Exits(Signal::Success(buffer)))
     }
+}
+
+fn init_logger() {
+    let _ = WriteLogger::init(
+        LevelFilter::Info,
+        Config::default(),
+        File::create("simplelog01.log").expect("Failed to start simplelog"),
+    );
 }
 
 #[test]

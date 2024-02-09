@@ -6,6 +6,7 @@ use crate::{
     HistorySessionId, Result,
 };
 
+use log::info;
 use std::{
     collections::VecDeque,
     fs::OpenOptions,
@@ -76,7 +77,9 @@ impl History for FileBackedHistory {
                 self.len_on_disk = self.len_on_disk.saturating_sub(1);
             }
             self.entries.push_back(entry.to_string());
-            Some(HistoryItemId::new((self.entries.len() - 1) as i64))
+            let idx = self.entries.len() - 1;
+            info!("save idx = {:?}", idx);
+            Some(HistoryItemId::new((idx) as i64))
         } else {
             None
         };
