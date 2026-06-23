@@ -86,6 +86,7 @@ pub struct ListMenu {
 
 impl Default for ListMenu {
     fn default() -> Self {
+        println!("ListMenu - MIA");
         Self {
             settings: MenuSettings::default()
                 .with_name("search_menu")

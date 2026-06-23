@@ -162,6 +162,7 @@ pub struct IdeMenu {
 
 impl Default for IdeMenu {
     fn default() -> Self {
+        println!("IdeMenu - MIA");
         Self {
             settings: MenuSettings::default().with_name("ide_completion_menu"),
             active: false,

@@ -83,6 +83,7 @@ pub struct DescriptionMenu {
 
 impl Default for DescriptionMenu {
     fn default() -> Self {
+        println!("DescriptionMenu - MIA");
         Self {
             settings: MenuSettings::default()
                 .with_name("description_menu")

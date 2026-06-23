@@ -93,6 +93,7 @@ pub struct ColumnarMenu {
 
 impl Default for ColumnarMenu {
     fn default() -> Self {
+        println!("ColumnarMenu - MIA");
         Self {
             settings: MenuSettings::default().with_name("columnar_menu"),
             active: false,
