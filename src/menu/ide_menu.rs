@@ -358,7 +358,7 @@ impl IdeMenu {
     }
 
     fn no_records_msg(&self, use_ansi_coloring: bool) -> String {
-        let msg = "NO RECORDS FOUND";
+        let msg = "IdeMenu: NO RECORDS FOUND";
         if use_ansi_coloring {
             format!(
                 "{}{}{}",
