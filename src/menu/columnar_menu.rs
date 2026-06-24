@@ -359,7 +359,7 @@ impl ColumnarMenu {
     }
 
     fn no_records_msg(&self, use_ansi_coloring: bool) -> String {
-        let msg = "NO RECORDS FOUND";
+        let msg = "ColumnarMenu: NO RECORDS FOUND";
         if use_ansi_coloring {
             format!(
                 "{}{}{}",
